@@ -430,7 +430,7 @@ Connect wallet
         Follow Development here: <a href="https://github.com/swapbch-org"> our github</a>
 </br>
 <center><b>Total BCH Donated</b></br>
-    $855,75 - 1,3969 BCH</br>
+<div class="showSwapbchwallet"></div> </br>
 </br></br>
 
 <b>Donate to speed up development</b></br>
@@ -444,6 +444,7 @@ Connect wallet
 const ethereumButton = document.querySelector('.enableMetamaskButton');
 const showAccount = document.querySelector('.showAccount');
 const showBalance = document.querySelector('.showBalance');
+const showSwapbchwallet = document.querySelector('.showSwapbchwallet');
 
 
 // Modern DApp Browsers
@@ -471,7 +472,23 @@ else {
 }
 
 
+// connect to bitcoin cash node api
 
+    var apiUrl = 'https://rest.bch.actorforth.org/v2/address/details/1H1PjEF62bkoi52FdRryacnbLE6nCPzPcG';
+    fetch(apiUrl).then(response => {
+      return response.json();
+    }).then(data => {
+      // Work with JSON data here
+      var wallet_balance = data["balance"];
+      var wallet_balance = String(wallet_balance)
+      var wallet_balances = wallet_balance.substring(0, 4) + " BCH";
+      showSwapbchwallet.innerHTML = wallet_balances;
+
+    }).catch(err => {
+      // Do something for an error here
+    });
+
+    //
 
 async function getAccount() {
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
